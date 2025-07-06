@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: SensorPulse
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    streams:
+      application-id: sensor-pulse-analytics
+      default-key-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      default-value-serde: org.springframework.kafka.support.serializer.JsonSerde
+    consumer:
+      group-id: sensor-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 8080
